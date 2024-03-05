@@ -1,19 +1,11 @@
-# Usar una imagen base oficial de Python
-FROM python:3.8-slim
+FROM python:3.8
 
-# Establecer el directorio de trabajo en el contenedor
 WORKDIR /app
 
-# Copiar los archivos de requisitos primero para aprovechar la caché de capas de Docker
-COPY requirements.txt ./
+COPY ./requirements.txt /app/requirements.txt
 
-# Instalar las dependencias
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
-# Copiar el resto de los archivos de la aplicación al directorio de trabajo
-COPY . .
+COPY . /app
 
-EXPOSE 8080
-
-# Ejecutar la aplicación
-CMD [ "python", "./app.py" ]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
