@@ -13,5 +13,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copiar el resto de los archivos de la aplicación al directorio de trabajo
 COPY . .
 
+EXPOSE 8080
+
 # Ejecutar la aplicación
 CMD [ "python", "./app.py" ]
